@@ -128,8 +128,7 @@ def run_test(test_func):
     return duration
 
 
-
-test_functions = [eval(f"experiment_{letter}") for letter in string.ascii_lowercase[:9]]
+test_functions = [eval(lcl) for lcl in locals() if lcl.startswith("experiment_")]
 
 results = {}
 for test_func in test_functions:
