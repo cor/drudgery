@@ -1,5 +1,7 @@
 import random
 import time
+import string
+
 from pprint import pprint
 from statistics import mean
 
@@ -126,17 +128,8 @@ def run_test(test_func):
     return duration
 
 
-test_functions = [
-    experiment_a,
-    experiment_b,
-    experiment_c,
-    experiment_d,
-    experiment_e,
-    experiment_f,
-    experiment_g,
-    experiment_h,
-    experiment_i
-]
+
+test_functions = [eval(f"experiment_{letter}") for letter in string.ascii_lowercase[:9]]
 
 results = {}
 for test_func in test_functions:
