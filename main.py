@@ -1,15 +1,18 @@
 import random
 import time
-import string
 
 from pprint import pprint
 from statistics import mean
 
 from pyfiglet import figlet_format
 
+EXPERIMENT_COUNT = 2_000
+GRAPH_WIDTH = 50
+
+
 # Generate a sequence of 100 'H' (Heads) and 'T' (Tails) throws
 # and return the amount of 6-long chains of the same value
-def experiment_a():
+def experiment_aaaaaaaaa():
     """The original"""
     flip_results = random.choices(('H', 'T'), k=100)
     streak_count = 0
@@ -100,7 +103,6 @@ def experiment_i():
     return streak_count
 
 
-EXPERIMENT_COUNT = 200_000
 """
 Cor predictions:
 f is sneller dan e (geen if statement)
@@ -134,7 +136,7 @@ def run_test(test_func):
 
     duration = time.time() - start_time
     print(f'Result: {mean(results)}')
-    print(f'Time: {duration}')
+    print(f'Time: \x1b[32m{duration}\x1b[0m')
     print()
     return duration
 
@@ -144,14 +146,34 @@ test_functions = [eval(lcl) for lcl in locals() if lcl.startswith("experiment_")
 results = {}
 for test_func in test_functions:
     name = test_func.__name__
-    print(f"Running {name}")
+    print(f"Running \x1b[31m{name}\x1b[0m")
     print(test_func.__doc__)
     duration = run_test(test_func)
 
     results[name] = duration
 
-print("Results: ")
-pprint(sorted(results.items(), key=lambda item: item[1]))
+# print("Results:")
+# pprint(sorted(results.items(), key=lambda item: item[1]))
+
+print()
+print("The Results:")
+
+max_name_length = max(map(len, results.keys()))
+max_value = max(results.values())
+winner = sorted(results.items(), key=lambda item: item[1])[0][0]
+
+for res in results:
+    print(res.rjust(max_name_length, ' ')
+        + ' | '
+        + ('\x1b[32m' if res == winner else '\x1b[31m')
+        + '═' * int(results[res] / max_value * GRAPH_WIDTH)
+        + "\x1b[30m"
+        + '═' * (GRAPH_WIDTH - int(results[res] / max_value * GRAPH_WIDTH))
+        + (' \x1b[32m' if res == winner else ' \x1b[30m')
+        + ("%.4fs" % round(results[res], 4))
+        + "\x1b[0m")
+
 
 print("\n\nAnd the absolute winner is...")
-figlet_format(sorted(results.items(), key=lambda item: item[1])[0])
+print(figlet_format(winner))
+print(f"It seems that {eval(winner).__doc__} was the best approach after all")
