@@ -10,12 +10,11 @@ from pyfiglet import figlet_format
 # Generate a sequence of 100 'H' (Heads) and 'T' (Tails) throws
 # and return the amount of 6-long chains of the same value
 def experiment_a():
-        """The original"""
+    """The original"""
     flip_results = random.choices(('H', 'T'), k=100)
     streak_count = 0
     for i in range(len(flip_results) - 6):
-        if ('T' not in flip_results[i:i + 6]) or 
-           ('H' not in flip_results[i:i + 6]):
+        if ('T' not in flip_results[i:i + 6]) or ('H' not in flip_results[i:i + 6]):
             streak_count += 1
     return streak_count
 
