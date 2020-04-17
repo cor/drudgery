@@ -1,18 +1,15 @@
 import random
 import time
 
-from pprint import pprint
 from statistics import mean
-
 from pyfiglet import figlet_format
 
 EXPERIMENT_COUNT = 2_000
 GRAPH_WIDTH = 50
 
-
 # Generate a sequence of 100 'H' (Heads) and 'T' (Tails) throws
 # and return the amount of 6-long chains of the same value
-def experiment_aaaaaaaaa():
+def experiment_a():
     """The original"""
     flip_results = random.choices(('H', 'T'), k=100)
     streak_count = 0
@@ -103,30 +100,8 @@ def experiment_i():
     return streak_count
 
 
-"""
-Cor predictions:
-f is sneller dan e (geen if statement)
-d is sneller dan c (geen string replicate operator)
-b is sneller dan a (minder "in" checks)
 
-D/C snelst, daarna F/E, daarna B/A
-
-DCFEBA
-
-
-Bart predictions:
-b is sneller dan a (omdat eerder quit)
-c is even snel als d (omdat iets met precompile?)
-e is sneller dan f (je bespaart een type conversion, en += 1 is goedkoop)
-
-C/D E F B A
-
-
-A = 12.72
-B 12.51
-
-"""
-
+# Test runner
 
 def run_test(test_func):
     start_time = time.time()
@@ -152,11 +127,8 @@ for test_func in test_functions:
 
     results[name] = duration
 
-# print("Results:")
-# pprint(sorted(results.items(), key=lambda item: item[1]))
 
-print()
-print("The Results:")
+print("\nThe Results:")
 
 max_name_length = max(map(len, results.keys()))
 max_value = max(results.values())
