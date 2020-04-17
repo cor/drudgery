@@ -81,12 +81,12 @@ def experiment_g():
 
 
 def experiment_h():
-    """(flip_results[i:i+6] == "HHHHHH" ∨ flip_results[i:i+6] == "FFFFFF")"""
+    """(flip_results[i:i+6] == "HHHHHH" ∨ flip_results[i:i+6] == "TTTTTT")"""
     flip_results = "".join(random.choices(('H', 'T'), k=100))
     streak_count = 0
     for i in range(len(flip_results) - 6):
         streak_count += (flip_results[i:i + 6] == "HHHHHH"
-                         or flip_results[i:i + 6] == "FFFFFF")
+                         or flip_results[i:i + 6] == "TTTTTT")
     return streak_count
 
 
