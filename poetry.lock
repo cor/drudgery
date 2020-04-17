@@ -1,0 +1,14 @@
+[[package]]
+category = "main"
+description = "Pure-python FIGlet implementation"
+name = "pyfiglet"
+optional = false
+python-versions = "*"
+version = "0.8.post1"
+
+[metadata]
+content-hash = "c89e8576c31dec1a10a1ab5d4b65027b77fed3d65bf1f1c3a4174c3800e392bf"
+python-versions = "^3.7"
+
+[metadata.hashes]
+pyfiglet = ["c6c2321755d09267b438ec7b936825a4910fec696292139e664ca8670e103639", "d555bcea17fbeaf70eaefa48bb119352487e629c9b56f30f383e2c62dd67a01c"]

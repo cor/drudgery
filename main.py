@@ -5,48 +5,60 @@ import string
 from pprint import pprint
 from statistics import mean
 
+from pyfiglet import figlet_format
+
 # Generate a sequence of 100 'H' (Heads) and 'T' (Tails) throws
 # and return the amount of 6-long chains of the same value
 def experiment_a():
+        """The original"""
     flip_results = random.choices(('H', 'T'), k=100)
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        if ('T' not in flip_results[i:i+6]) or ('H' not in flip_results[i:i+6]):
+    for i in range(len(flip_results) - 6):
+        if ('T' not in flip_results[i:i + 6]) or 
+           ('H' not in flip_results[i:i + 6]):
             streak_count += 1
     return streak_count
 
 
 def experiment_b():
+    """The authentic original original.""" 
     flip_results = random.choices(('H', 'T'), k=100)
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        if (flip_results[i] == 'H' and 'T' not in flip_results[i:i+6]) or (flip_results[i] == 'T' and 'H' not in flip_results[i:i+6]):
+    for i in range(len(flip_results) - 6):
+        if (flip_results[i] == 'H' and 'T' not in flip_results[i:i + 6]) or (
+                flip_results[i] == 'T' and 'H' not in flip_results[i:i + 6]):
             streak_count += 1
     return streak_count
 
 
 def experiment_c():
+    """We thought we were being smart here"""
     flip_results = "".join(random.choices(('H', 'T'), k=100))
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        if (flip_results[i:i+6] == "T"*6) or (flip_results[i:i+6] == "H"*6):
+    for i in range(len(flip_results) - 6):
+        if (flip_results[i:i + 6] == "T" * 6) or (
+                flip_results[i:i + 6] == "H" * 6):
             streak_count += 1
     return streak_count
 
+
 def experiment_d():
+    """No string replication for extra speed. No strings attached."""
     flip_results = "".join(random.choices(('H', 'T'), k=100))
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        if (flip_results[i:i+6] == "TTTTTT") or (flip_results[i:i+6] == "HHHHHH"):
+    for i in range(len(flip_results) - 6):
+        if (flip_results[i:i + 6] == "TTTTTT") or (
+                flip_results[i:i + 6] == "HHHHHH"):
             streak_count += 1
     return streak_count
 
 
 def experiment_e():
+    """e."""
     flip_results = "".join(random.choices(('H', 'T'), k=100))
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        if (flip_results[i:i+6] == flip_results[i]*6):
+    for i in range(len(flip_results) - 6):
+        if (flip_results[i:i + 6] == flip_results[i] * 6):
             streak_count += 1
     return streak_count
 
@@ -55,40 +67,41 @@ def experiment_f():
     """Our old favourite"""
     flip_results = "".join(random.choices(('H', 'T'), k=100))
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        streak_count += (flip_results[i:i+6] == flip_results[i]*6)
+    for i in range(len(flip_results) - 6):
+        streak_count += (flip_results[i:i + 6] == flip_results[i] * 6)
     return streak_count
 
 
 def experiment_g():
-    """streak_count += (flip_results[i:i+6] in ('TTTTTT', 'HHHHHH'))""" 
+    """streak_count += (flip_results[i:i+6] in ('TTTTTT', 'HHHHHH'))"""
     flip_results = "".join(random.choices(('H', 'T'), k=100))
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        streak_count += (flip_results[i:i+6] in ('TTTTTT', 'HHHHHH'))
+    for i in range(len(flip_results) - 6):
+        streak_count += (flip_results[i:i + 6] in ('TTTTTT', 'HHHHHH'))
     return streak_count
 
 
 def experiment_h():
-    """(flip_results[i:i+6] == "HHHHHH" or flip_results[i:i+6] == "FFFFFF")"""
+    """(flip_results[i:i+6] == "HHHHHH" ∨ flip_results[i:i+6] == "FFFFFF")"""
     flip_results = "".join(random.choices(('H', 'T'), k=100))
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        streak_count += (flip_results[i:i+6] == "HHHHHH" or flip_results[i:i+6] == "FFFFFF")
+    for i in range(len(flip_results) - 6):
+        streak_count += (flip_results[i:i + 6] == "HHHHHH"
+                         or flip_results[i:i + 6] == "FFFFFF")
     return streak_count
+
 
 def experiment_i():
     """Same as h but we cache a var"""
     flip_results = "".join(random.choices(('H', 'T'), k=100))
     streak_count = 0
-    for i in range(len(flip_results)-6):
-        temp = flip_results[i:i+6]
+    for i in range(len(flip_results) - 6):
+        temp = flip_results[i:i + 6]
         streak_count += (temp == "HHHHHH" or temp == "FFFFFF")
     return streak_count
 
 
-EXPERIMENT_COUNT = 20
-
+EXPERIMENT_COUNT = 200_000
 """
 Cor predictions:
 f is sneller dan e (geen if statement)
@@ -120,7 +133,6 @@ def run_test(test_func):
     for i in range(EXPERIMENT_COUNT):
         results.append(test_func())
 
-
     duration = time.time() - start_time
     print(f'Result: {mean(results)}')
     print(f'Time: {duration}')
@@ -141,3 +153,6 @@ for test_func in test_functions:
 
 print("Results: ")
 pprint(sorted(results.items(), key=lambda item: item[1]))
+
+print("\n\nAnd the absolute winner is...")
+figlet_format(sorted(results.items(), key=lambda item: item[1])[0])
