@@ -1,10 +1,11 @@
 import random
 import time
 
+from regex import findall
 from statistics import mean
 from pyfiglet import figlet_format
 
-EXPERIMENT_COUNT = 2_000
+EXPERIMENT_COUNT = 200_000
 GRAPH_WIDTH = 50
 
 # Generate a sequence of 100 'H' (Heads) and 'T' (Tails) throws
@@ -20,7 +21,7 @@ def experiment_a():
 
 
 def experiment_b():
-    """The authentic original original.""" 
+    """The authentic original original."""
     flip_results = random.choices(('H', 'T'), k=100)
     streak_count = 0
     for i in range(len(flip_results) - 6):
@@ -79,6 +80,14 @@ def experiment_g():
         streak_count += (flip_results[i:i + 6] in ('TTTTTT', 'HHHHHH'))
     return streak_count
 
+def experiment_g2():
+    """streak_count += (flip_results[i:i+6] in ('TTTTTT', 'HHHHHH')) choice"""
+    flip_results = "".join(random.choice(('H', 'T')) for i in range(100))
+    streak_count = 0
+    for i in range(len(flip_results) - 6):
+        streak_count += (flip_results[i:i + 6] in ('TTTTTT', 'HHHHHH'))
+    return streak_count
+
 
 def experiment_h():
     """(flip_results[i:i+6] == "HHHHHH" ∨ flip_results[i:i+6] == "TTTTTT")"""
@@ -96,8 +105,69 @@ def experiment_i():
     streak_count = 0
     for i in range(len(flip_results) - 6):
         temp = flip_results[i:i + 6]
-        streak_count += (temp == "HHHHHH" or temp == "FFFFFF")
+        streak_count += (temp == "HHHHHH" or temp == "TTTTTT")
     return streak_count
+
+def experiment_k():
+    "Leon's test"
+    flip_results = "".join(random.choice(('H', 'T')) for i in range(100))
+    
+    streaks_H = len(findall("HHHHHH", flip_results, overlapped=True))
+    streaks_T = len(findall("TTTTTT", flip_results, overlapped=True))
+
+    return streaks_H + streaks_T
+
+def experiment_k2():
+    "Leon's test choices"
+    flip_results = "".join(random.choices(('H', 'T'), k=100))
+    
+    streaks_H = len(findall("HHHHHH", flip_results, overlapped=True))
+    streaks_T = len(findall("TTTTTT", flip_results, overlapped=True))
+
+    return streaks_H + streaks_T
+
+
+def experiment_l():
+    "Leon's test"
+    flip_results = "".join(random.choice(('H', 'T')) for i in range(100))
+    
+    streaks = len(findall("HHHHHH|TTTTTT", flip_results, overlapped=True))
+
+    return streaks
+
+
+def experiment_l2():
+    "Leon's test choices"
+    flip_results = "".join(random.choices(('H', 'T'), k=100))
+    
+    streaks = len(findall("HHHHHH|TTTTTT", flip_results, overlapped=True))
+
+    return streaks
+
+def experiment_r():
+    "Roos's algorithm"
+    randomlist = []
+    numberOfSequenceHeads = 0
+    numberOfSequenceTails = 0
+    numberOfStreaks = 0
+
+    for experimentNumber in range(100):
+        number = random.choice(['Heads','Tails'])
+        randomlist.append(number)
+    for i in range(len(randomlist)):
+        if randomlist[i] == 'Heads':
+            numberOfSequenceTails = 0
+            numberOfSequenceHeads +=1
+            if numberOfSequenceHeads ==6:
+                numberOfStreaks +=1
+        elif randomlist[i] == 'Tails':
+            numberOfSequenceHeads = 0
+            numberOfSequenceTails += 1
+            if numberOfSequenceTails == 6:
+                numberOfStreaks +=1
+    return numberOfStreaks
+
+
 
 
 
