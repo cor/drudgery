@@ -8,6 +8,7 @@ from pyfiglet import figlet_format
 EXPERIMENT_COUNT = 200_000
 GRAPH_WIDTH = 50
 
+
 # Generate a sequence of 100 'H' (Heads) and 'T' (Tails) throws
 # and return the amount of 6-long chains of the same value
 def experiment_a():
@@ -111,7 +112,7 @@ def experiment_i():
 def experiment_k():
     "Leon's test"
     flip_results = "".join(random.choice(('H', 'T')) for i in range(100))
-    
+
     streaks_H = len(findall("HHHHHH", flip_results, overlapped=True))
     streaks_T = len(findall("TTTTTT", flip_results, overlapped=True))
 
@@ -120,7 +121,7 @@ def experiment_k():
 def experiment_k2():
     "Leon's test choices"
     flip_results = "".join(random.choices(('H', 'T'), k=100))
-    
+
     streaks_H = len(findall("HHHHHH", flip_results, overlapped=True))
     streaks_T = len(findall("TTTTTT", flip_results, overlapped=True))
 
@@ -130,7 +131,7 @@ def experiment_k2():
 def experiment_l():
     "Leon's test"
     flip_results = "".join(random.choice(('H', 'T')) for i in range(100))
-    
+
     streaks = len(findall("HHHHHH|TTTTTT", flip_results, overlapped=True))
 
     return streaks
@@ -139,10 +140,11 @@ def experiment_l():
 def experiment_l2():
     "Leon's test choices"
     flip_results = "".join(random.choices(('H', 'T'), k=100))
-    
+
     streaks = len(findall("HHHHHH|TTTTTT", flip_results, overlapped=True))
 
     return streaks
+
 
 def experiment_r():
     "Roos's algorithm"
@@ -168,7 +170,55 @@ def experiment_r():
     return numberOfStreaks
 
 
+def experiment_u_char():
+    """Use bits in number to store coin-flip results (store as char)"""
+    r = 0
 
+    d = ['T'] * 100
+    x = random.getrandbits(100)
+
+    for i in range(0, 100):
+        if x & (1 << i):
+            d[i] = 'H'
+
+    x = l = 0
+    c = ' '
+    for i in d:
+        if i == c:
+            l += 1
+            if l >= 6:
+                x += 1
+        else:
+            l = 1
+            c = i
+
+    r += x
+
+    return r
+
+
+def experiment_u_bits():
+    """Use bits in number to store coin-flip results (use bits to process)"""
+    number_of_samples = 100
+    streak_length = 6
+
+    data = random.getrandbits(100)
+
+    result = 0
+    length_of_current_streak = 0
+    last_sample = None
+    for sample_index in range(0, number_of_samples):
+        sample = data & (1 << sample_index) == 0
+
+        if sample != last_sample:
+            length_of_current_streak = 1
+            last_sample = sample
+        else:
+            length_of_current_streak += 1
+            if length_of_current_streak >= streak_length:
+                result += 1
+
+    return result
 
 
 # Test runner
