@@ -172,29 +172,29 @@ def experiment_r():
 
 def experiment_u_char():
     """Use bits in number to store coin-flip results (store as char)"""
-    r = 0
+    result = 0
 
-    d = ['T'] * 100
-    x = random.getrandbits(100)
+    data = ['T'] * 100
+    random_number = random.getrandbits(100)
 
-    for i in range(0, 100):
-        if x & (1 << i):
-            d[i] = 'H'
+    for current_character in range(0, 100):
+        if random_number & (1 << current_character):
+            data[current_character] = 'H'
 
-    x = l = 0
-    c = ' '
-    for i in d:
-        if i == c:
-            l += 1
-            if l >= 6:
-                x += 1
+    random_number = streak_length = 0
+    last_character = ' '
+    for current_character in data:
+        if current_character == last_character:
+            streak_length += 1
+            if streak_length >= 6:
+                random_number += 1
         else:
-            l = 1
-            c = i
+            streak_length = 1
+            last_character = current_character
 
-    r += x
+    result += random_number
 
-    return r
+    return result
 
 
 def experiment_u_bits():
