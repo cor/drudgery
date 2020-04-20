@@ -146,6 +146,18 @@ def experiment_l2():
     return streaks
 
 
+def experiment_l3():
+    "Art"
+    flip_results = "".join(random.choices(('H', 'T'), k=100))
+
+    return len(findall("HHHHHH|TTTTTT", flip_results, overlapped=True))
+
+
+def experiment_l4():
+    "One liner Art"
+    return len(findall("HHHHHH|TTTTTT", "".join(random.choices(('H', 'T'), k=100)), overlapped=True))
+
+
 def experiment_r():
     "Roos's algorithm"
     randomlist = []
